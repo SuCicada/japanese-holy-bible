@@ -1,0 +1,78 @@
+body{
+  background-color: #1E1C19;
+}
+.App {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+  color: #dafafa;
+}
+.bible-header{
+  text-align: center;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.MuiSelect-root {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+/*.MuiSelect-select {*/
+/*    color: #cb1f1f !important;*/
+/*}*/
+/*.MuiOutlinedInput-notchedOutline {*/
+/*    border-width: 1px !important;*/
+/*    border-color: pink !important;*/
+/*}*/
+
+/*.Mui-focused .MuiOutlinedInput-notchedOutline {*/
+/*    border-color: green !important;*/
+/*}*/
+
+.bible-table{
+  font-size: 25px;
+  white-space: pre-wrap;
+  & rt {
+    color: #92ff94;
+    font-size: 18px;
+  /*//padding-bottom: 5px;*/
+    transform: translateY(0.5em);
+  /*//font-size: 32px;*/
+    position: relative;
+    top: -0.5em;
+    user-select: none;
+  }
+}
