@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
 //    "target": "ES6",
-//    "module": "esnext",
+    "module": "esnext",
 
-    "module": "CommonJS",
+//    "module": "CommonJS",
     "target": "ES2018",
 
     //    "target": "esnext",
