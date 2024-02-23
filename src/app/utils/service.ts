@@ -45,3 +45,47 @@ export function decodeJapaneseFurigana(text: string) {
 export function getHiragana(bible:Bible){
     return decodeJapaneseFurigana(bible.furigana??"").map(item=>item[2]).join("")
 }
+
+export const getAudioData = async (text: string,ttsEngine:string) => {
+  return await fetch(process.env.NEXT_PUBLIC_TTSHUB_SERVER as string, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // "Access-Control-Allow-Origin": "*"
+    },
+    mode: 'cors',
+    body: JSON.stringify({
+      // tts_engine: "gtts",
+      voice: "fable",
+      tts_engine: ttsEngine,
+      text: text,
+      // speaker: speaker,
+      language: "ja",
+      speed: 1,
+    })
+  })
+    .then(async response => {
+      // const audioData = await response.arrayBuffer()
+      const data = await response.json()
+      // const jsonData = await response.headers.get('Response-Data')
+      // const json = jsonData ? JSON.parse(jsonData) : {}
+      // console.log(data)
+      let sampling_rate = data["sampling_rate"];
+      let audioBase64 = data["audio"];
+      // let arrayBuffer = Buffer.from(audioBase64, "base64");
+
+      let binaryString = window.atob(audioBase64);
+      let len = binaryString.length;
+      let arrayBuffer = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        arrayBuffer[i] = binaryString.charCodeAt(i);
+      }
+
+      const blob = new Blob([arrayBuffer], {type: "audio/wav"});
+      const audioUrl = URL.createObjectURL(blob);
+      return {sampling_rate, audioData: arrayBuffer, audioUrl}
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}

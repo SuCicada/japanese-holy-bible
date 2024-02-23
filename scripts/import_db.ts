@@ -6,7 +6,7 @@ import path from "path";
 import dotenv from "dotenv";
 
 import {Bible} from "@/app/bible/data";
-import {getJapaneseFurigana} from "../src/app/utils/service";
+import {getJapaneseFurigana} from "@/app/utils/service";
 
 let env_file = path.join(__dirname, '../.env.development.local');
 dotenv.config({path: env_file});

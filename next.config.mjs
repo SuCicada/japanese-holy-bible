@@ -5,5 +5,5 @@ const nextConfig = {
     // env: process.env
 };
 // dotenv.config();
-console.log(process.env)
+// console.log(process.env)
 export default nextConfig;
