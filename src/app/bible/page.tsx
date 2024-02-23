@@ -149,7 +149,12 @@ function Page() {
                   marginRight: "5px",
                   // paddingRight: "-210px",
                 }}>
-                  <button onClick={onClickAudio}>言</button>
+                  <button
+                    style={{
+                      userSelect: "none"
+                    }}
+                    onClick={onClickAudio}>言
+                  </button>
                   <span style={{
                     // display: "block",
                     // marginTop: "20px",
@@ -162,7 +167,7 @@ function Page() {
                 <td className={"bible-text"}
                     onClick={onClickAudio}>
                   <div>
-                  <WordElement {...{word}}/>
+                    <WordElement {...{word}}/>
                   </div>
                 </td>
                 {/*<td>*/}
