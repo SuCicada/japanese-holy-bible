@@ -132,13 +132,9 @@ function Page() {
 
   return (
     <div className="App">
-      {/*<div className={"bible-header"}>*/}
-      {/*  <h1>生きてください。</h1>*/}
-      {/*</div>*/}
-      {/*<table>*/}
-      {/*  <tbody>*/}
-      {/*  <tr className={"bible-body"}>*/}
-      {/*  <td>*/}
+      <div className={"bible-header"}>
+        <h1>生きてください。</h1>
+      </div>
       <div className={"bible-body"}>
         <table className={"bible-table"}>
           <tbody>
