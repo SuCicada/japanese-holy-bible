@@ -1,5 +1,5 @@
 export type Bible = {
-    id: number
+    id?: number
     // version?: string
     book: string
     chapter: number
