@@ -3,7 +3,7 @@
 npx prisma init
 
 npx dotenv -e .env.production.local -- npx prisma db pull
-npx prisma generate
+npx dotenv -e .env.production.local -- npx prisma generate
 
 
 ALTER TABLE bible
