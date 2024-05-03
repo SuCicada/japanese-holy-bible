@@ -7,4 +7,5 @@ export type Bible = {
     text: string
     furigana?: string
     hiragana?: string
+    reading?: string
 }

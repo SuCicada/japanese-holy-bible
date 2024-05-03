@@ -10,7 +10,7 @@ function exec_cmd(cmd) {
 let arg = process.argv.slice(2);
 // let env = arg[0];
 let env = "production"
-let env_file = ".env.development.local"
+let env_file = ".env.production.local"
 let env_data = fs.readFileSync(env_file, "utf8");
 const parsedEnv = dotenv.parse(env_data);
 

@@ -21,6 +21,7 @@ model bible {
   verse    Int?
   text     String?
   furigana String?
+  reading  String?
 
   @@unique([book, chapter, verse], map: "unique_combination")
 }

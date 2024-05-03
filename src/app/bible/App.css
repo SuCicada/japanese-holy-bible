@@ -1,9 +1,11 @@
 body {
   background-color: #1E1C19;
+  overflow: hidden;
   /*overflow-y: hidden;*/
 }
 
 .App {
+  overflow: hidden;
   /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',*/
   /*'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',*/
   /*sans-serif;*/
@@ -12,8 +14,9 @@ body {
 
 .bible-header {
   text-align: center;
+  /*overflow: hidden;*/
   /*position: relative;*/
-  /*position: fixed;*/
+  position: fixed;
   width: 100%;
   /* height: 8vh; */
 }
@@ -40,18 +43,18 @@ body {
 /*  color: white;*/
 /*}*/
 
-.App-link {
-  color: #61dafb;
-}
+/*.App-link {*/
+/*  color: #61dafb;*/
+/*}*/
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/*@keyframes App-logo-spin {*/
+/*  from {*/
+/*    transform: rotate(0deg);*/
+/*  }*/
+/*  to {*/
+/*    transform: rotate(360deg);*/
+/*  }*/
+/*}*/
 
 /*.MuiSelect-root {*/
 /*  background-color: #fff;*/
@@ -73,14 +76,18 @@ body {
 /*  overflow-y: scroll;*/
 /*}*/
 .bible-body {
+  /*overflow: hidden ;*/
+  margin-top: 15vh;
+  height: 75vh;
+  /*margin-bottom: 20vh;*/
   /*white-space: pre-wrap; !* 保留空白符号并允许换行 *!*/
   /*word-wrap: break-word;*/
   /*height: calc(100vh - 70px);*/
   /*bottom: 70px;*/
-  @media (max-width: 600px) {
-    /*height: 50px;*/
-    height: 60vh;
-  }
+  /*@media (max-width: 600px) {*/
+  /*height: 50px;*/
+  /*height: 60vh;*/
+  /*}*/
   /*top: 0;*/
   /*width: 80vh;*/
   /*bottom: 70px;*/
@@ -91,7 +98,6 @@ body {
 
   /*overflow-y: scroll; !* 允许滚动 *!*/
   /*display: flex;*/
-  height: 80vh;
   /*height: 100%;*/
   /*width: 80vw;*/
   /*width: min-content;*/
@@ -155,7 +161,8 @@ body {
 /*}*/
 
 .bible-toolbar {
-  display: block;
+  /*overflow: hidden;*/
+  /*display: block;*/
   /*display: flex;*/
   /*justify-content: space-between;*/
   /*align-items: center;*/
@@ -163,9 +170,11 @@ body {
   /*background-color: #282c34;*/
   /*color: white;*/
   position: fixed;
+  /*margin-bottom: 20vh;*/
   width: 100%; /* 宽度占满整个屏幕 */
   /*height: 50px;*/
-  height: 20vh;
-  /*bottom: 10vh;*/
+  /*height: 9vh;*/
+  height: auto;
+  bottom: 0;
   /*white-space: pre-wrap;*/
 }

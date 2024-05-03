@@ -1,6 +1,7 @@
 # japanese holy bible
 
 npx prisma init
+npx prisma generate 
 
 npx dotenv -e .env.production.local -- npx prisma db pull
 npx dotenv -e .env.production.local -- npx prisma generate
