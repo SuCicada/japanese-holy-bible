@@ -45,7 +45,7 @@ function Page() {
     };
   }, []);
   useEffect(() => {
-  console.log(hash) 
+  console.log(hash)
   }, [hash]);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ function Page() {
       {selectedValue?.book}
       {selectedValue?.chapter}
       {/* <TwoColumnSelect/> */}
-      <BookSelect handleSelectChange={handleSelectChange} />
+      {/*<BookSelect handleSelectChange={handleSelectChange} />*/}
       {/* ---- */}
       {words.map((word, index) => {
         return (
