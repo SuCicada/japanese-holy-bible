@@ -34,7 +34,7 @@ function Page() {
     setSelectedValue(value);
   };
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   useEffect(() => {
     const handleHashChange = () => {
       setHash(getHash());
@@ -77,7 +77,7 @@ function Page() {
     // console.log(router.asPath)
     console.log(hash)
     console.log(pathname)
-    console.log(searchParams)
+    // console.log(searchParams)
   }, []);
 
   const params = useParams();
