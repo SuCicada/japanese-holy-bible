@@ -6,17 +6,17 @@ const AudioCache: { [key: string]: string } = {}
 const PlayingAudio: HTMLAudioElement[] = []
 
 export default function Toolbar(
-  {params}: { params: { text:string } }
+  {text,clickSignal}: { text: string ,clickSignal: number}
 ) {
   const [audioUrl, setAudioUrl] = useState('')
   const audioRef = useRef<HTMLAudioElement>(null);
   const [ttsEngine, setTtsEngine] = useState("lain_style_bert_vits2")
   const [useAudioCache, setUseAudioCache] = useState(true)
-  const [temp, setTemp] = useState("")
+
   const handleTtsEngine = (event: ChangeEvent<HTMLSelectElement>) => {
     setTtsEngine(event.target.value);
   };
-  const currentText = params.text
+  const currentText = text
   const handleUseAudioCache = () => {
     setUseAudioCache(!useAudioCache)
     console.log("useAudioCache", !useAudioCache)
@@ -50,11 +50,12 @@ export default function Toolbar(
           console.log(dataUrl)
           stopAllAudio()
           setAudioUrl(dataUrl)
+          // setText("")
           // setTemp(dataUrl)
         }
       }
     })()
-  }, [currentText])
+  }, [currentText,clickSignal])
 
   const stopAllAudio = () => {
     PlayingAudio.forEach(audio => audio.pause())
@@ -72,7 +73,7 @@ export default function Toolbar(
     <div className={"bible-toolbar"}>
       <audio
         ref={audioRef}
-               src={audioUrl}
+        src={audioUrl}
         controls
         autoPlay={autoPlay}
         onCanPlay={(e) => {
@@ -100,5 +101,5 @@ export default function Toolbar(
         checked={useAudioCache}
         onChange={handleUseAudioCache}/>开启缓存
     </div>
-)
+  )
 }

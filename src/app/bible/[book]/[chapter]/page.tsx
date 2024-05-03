@@ -10,16 +10,18 @@ export default function BiblePage(
   {params}: { params: { book: string, chapter: string } }
 ) {
   const {book, chapter} = params
-  const [currentText, setCurrentText] = useState("")
+  const [text, setText] = useState("")
+  const [clickSignal, setClickSignal] = useState(1)
   const playAudio = async (text: string) => {
-    setCurrentText(text)
+    setText(text)
+    setClickSignal(-clickSignal)
   }
 
   return (
     <div>
       <BibleTable {...{book, chapter, playAudio}} />
 
-      <Toolbar params={{text: currentText}}/>
+      <Toolbar {...{text, clickSignal}} />
     </div>
   );
 }
