@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import * as Prisma from "@prisma/client";
 import { sql } from "@vercel/postgres";
 
-// export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic'
 const prisma = new PrismaClient();
 
 
