@@ -1,4 +1,4 @@
-import {sql} from "@vercel/postgres";
+import {sql} from "@/app/utils/db";
 import * as Prisma from "@prisma/client";
 import {prisma} from "@/app/utils/db";
 import {ChangeEventHandler, useEffect, useState} from "react";
@@ -59,33 +59,35 @@ export default function BookSelect(
     }
   }, [books, index]);
 
-  useEffect(() => {
-    if (!selectedBook) return
+  // useEffect(() => {
+  //   if (!selectedBook) return
+  //
+  //   (async function () {
+  //     const queryString = Object.entries({
+  //       book: selectedBook,
+  //     })
+  //       .map(([key, value]) => `${key}=${value}`)
+  //       .join('&');
+  //
+  //     /** @type {import("@/app/api/chapter/route.ts")} */
+  //     const response: Response = await fetch('/api/chapter?' + queryString,
+  //       {cache: "force-cache",});
+  //     const _characters = await response.json() as number[];
+  //     console.log(_characters)
+  //     console.log(characters)
+  //     setCharacters(_characters)
+  //     if (characters.length > 0) { // 说明不是第一次进入初始化的时候
+  //       // setSelectedChapter(_characters[0])
+  //       // setHandleSelect(selectedBook, characters[0])
+  //       changeBible(_characters[0])
+  //     }
+  //     // setBibleIndex(`${selectedBook} ${selectedChapter}`)
+  //   })();
+  // }, [selectedBook])
 
-    (async function () {
-      const queryString = Object.entries({
-        book: selectedBook,
-      })
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&');
-
-      /** @type {import("@/app/api/chapter/route.ts")} */
-      const response: Response = await fetch('/api/chapter?' + queryString,
-        {cache: "force-cache",});
-      const _characters = await response.json() as number[];
-      console.log(_characters)
-      setCharacters(_characters)
-      if (characters.length > 0) { // 说明不是第一次进入初始化的时候
-        // setSelectedChapter(_characters[0])
-        // setHandleSelect(selectedBook, characters[0])
-        changeBible(_characters[0])
-      }
-      // setBibleIndex(`${selectedBook} ${selectedChapter}`)
-    })();
-  }, [selectedBook])
-  function changeBible(chapter: number) {
+  function changeBible(book:string ,chapter: number) {
     setSelectedChapter(chapter)
-    setHandleSelect(selectedBook, chapter)
+    setHandleSelect(book, chapter)
   }
 
   function setHandleSelect(book: string, chapter: number) {
@@ -97,6 +99,31 @@ export default function BookSelect(
     }
   }
 
+  async function selectBook(newSelectBok: string) {
+    console.log("selectBook", newSelectBok)
+    if (newSelectBok && newSelectBok !== selectedBook) {
+      const queryString = Object.entries({
+        book: newSelectBok,
+      })
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&');
+
+      /** @type {import("@/app/api/chapter/route.ts")} */
+      const response: Response = await fetch('/api/chapter?' + queryString,
+        {cache: "force-cache",});
+      const _characters = await response.json() as number[];
+      console.log(_characters)
+      console.log(characters)
+      setCharacters(_characters)
+      // if (characters.length > 0) { // 说明不是第一次进入初始化的时候
+      // setSelectedChapter(_characters[0])
+      // setHandleSelect(selectedBook, characters[0])
+      changeBible(newSelectBok,_characters[0])
+      // }
+      // setBibleIndex(`${selectedBook} ${selectedChapter}`)
+      // })();
+    }
+  }
 
   function BookOption({type}: { type: "old" | "new" }) {
     let isOld = type === "old"
@@ -105,7 +132,7 @@ export default function BookSelect(
     let optionBooks = isOld ? books?.oldBooks : books?.newBooks
     return <>
       {name}：
-      <select value={value} onChange={(e) => {
+      <select value={value} onChange={async (e) => {
         if (isOld) {
           setOldOption(e.target.value)
           setNewOption("")
@@ -114,7 +141,8 @@ export default function BookSelect(
           setOldOption("")
         }
         console.log("BookOption", e.target.value)
-        setSelectedBook(e.target.value)
+        // setSelectedBook(e.target.value)
+        await selectBook(e.target.value)
         // handleSelectChangeEvent(e)
       }}>
         <option value="">---</option>
@@ -141,7 +169,7 @@ export default function BookSelect(
           let chapter = parseInt(e.target.value)
           // setSelectedChapter(chapter)
           // setHandleSelect(selectedBook, chapter)
-          changeBible(chapter)
+          changeBible(selectedBook,chapter)
         }}>
           {characters?.map((character) => (
             <option key={character} value={character}>

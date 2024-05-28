@@ -1,4 +1,4 @@
-import { sql } from "@vercel/postgres";
+import { sql } from "@/app/utils/db";
 import * as Prisma from "@prisma/client";
 import { prisma } from "@/app/utils/db";
 

@@ -10,7 +10,7 @@ export default function BibleTable({book, chapter, playAudio}: {
   const [words, setWords] = useState<Bible[]>([])
   useEffect(() => {
     (async function () {
-      console.log("BibleTable useEffect", book, chapter,playAudio)
+      console.log("BibleTable useEffect", book, chapter)
 
       /** @type {import("@/app/api/bible/[book]/[chapter]/route.ts")} */
       const response = await fetch(`/api/bible/${book}/${chapter}`,
