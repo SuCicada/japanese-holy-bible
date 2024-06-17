@@ -1,12 +1,20 @@
 import React, {ChangeEvent, useEffect, useRef, useState} from "react";
 import {getAudioData} from "@/app/utils/service";
+import {useMyStore} from "@/app/bible/myStore";
+// import {useToolbar} from "@/app/bible/[book]/[chapter]/page";
 
 const autoPlay = true
 const AudioCache: { [key: string]: string } = {}
 const PlayingAudio: HTMLAudioElement[] = []
 
 export default function Toolbar(
-  {text,clickSignal}: { text: string ,clickSignal: number}
+  // {text,clickSignal}: { text: string ,clickSignal: number}
+
+  {text,
+  // getAudioTest
+  }: {text:string,
+   // getAudioTest: () => string
+   }
 ) {
   const [audioUrl, setAudioUrl] = useState('')
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -16,10 +24,23 @@ export default function Toolbar(
   const handleTtsEngine = (event: ChangeEvent<HTMLSelectElement>) => {
     setTtsEngine(event.target.value);
   };
-  const currentText = text
+  // let {text} = useToolbar()
+  // const currentText = getAudioTest()
+
+  // const text = getAudioTest();
+  const {text2,clickSignal} = useMyStore();
+
+  const currentText = text2;
+
   const handleUseAudioCache = () => {
     setUseAudioCache(!useAudioCache)
     console.log("useAudioCache", !useAudioCache)
+  }
+
+  const stopAllAudio = () => {
+    PlayingAudio.forEach(audio => audio.pause())
+    PlayingAudio.length = 0
+    setAudioUrl("")
   }
 
 
@@ -57,11 +78,6 @@ export default function Toolbar(
     })()
   }, [currentText,clickSignal])
 
-  const stopAllAudio = () => {
-    PlayingAudio.forEach(audio => audio.pause())
-    PlayingAudio.length = 0
-    setAudioUrl("")
-  }
 
   // const router = useRouter()
   // function handleBookSelectChange(value: BibleIndex) {
@@ -71,6 +87,7 @@ export default function Toolbar(
 
   return (
     <div className={"bible-toolbar"}>
+      {/*<div>{currentText}</div>*/}
       <audio
         ref={audioRef}
         src={audioUrl}

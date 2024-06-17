@@ -2,7 +2,7 @@ import { sql } from "@/app/utils/db";
 import * as Prisma from "@prisma/client";
 import { prisma } from "@/app/utils/db";
 
-export default async function BookSelect() {
+export default async function BookSelect00() {
 
   // const {rows} = await sql`select * from books order by sort`;
   let oldBooks = await prisma.books.findMany({

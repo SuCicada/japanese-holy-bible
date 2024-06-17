@@ -2,29 +2,39 @@ import {sql} from "@/app/utils/db";
 import * as Prisma from "@prisma/client";
 import {prisma} from "@/app/utils/db";
 import {ChangeEventHandler, useEffect, useState} from "react";
-import {BibleBooks} from "../api/book/route";
+import {BibleBooks, BibleBookChapters, BookChapters} from "../api/book/route";
 import {BibleIndex} from "../api/bible/[book]/[chapter]/route";
+import {router} from "next/client";
+// import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 export default function BookSelect(
-  {index, handleSelectChange}: {
+  {
+    index,
+    // handleSelectChange
+  }: {
     // selectedValue: string;
     index: BibleIndex | undefined;
-    handleSelectChange: (value: BibleIndex) => void;
+    // handleSelectChange: (value: BibleIndex) => void;
   }
 ) {
   const [selectedBook, setSelectedBook] = useState('');
   const [selectedChapter, setSelectedChapter] = useState<number>(0)
   // const [bibleIndex, setBibleIndex] = useState<string>()
-  const [characters, setCharacters] = useState<number[]>([]) // 章s
+  // const [characters, setCharacters] = useState<number[]>([]) // 章s
+  const [bookChapters, setBookChapters] = useState<BookChapters>({})
   const [books, setBooks] = useState<BibleBooks>() // 书名s
 
   const [oldOption, setOldOption] = useState<string>()
   const [newOption, setNewOption] = useState<string>()
+  const router = useRouter()
 
+  console.log("BookSelect", decodeURI(index?.book ?? ""), index?.chapter)
   useEffect(() => {
     console.log("BookSelect useEffect", books)
     if (!books) {
       (async function () {
+        // "use server"
         /** @type {import("@/app/api/book/route.ts")} */
         const response = await fetch('/api/book',
           {
@@ -35,8 +45,9 @@ export default function BookSelect(
             // },
           }
         );
-        const _books = await response.json() as BibleBooks;
-        setBooks(_books)
+        const bibleBookChapters = await response.json() as BibleBookChapters;
+        setBooks(bibleBookChapters.books)
+        setBookChapters(bibleBookChapters.book_chapters)
       })();
     }
   }, []);
@@ -58,6 +69,18 @@ export default function BookSelect(
       setSelectedChapter(index.chapter)
     }
   }, [books, index]);
+
+  // useEffect(() => {
+  //   console.log("BookSelect useEffect", index, characters)
+  //   if (index && characters.length > 0) {
+  //     setSelectedChapter(index.chapter)
+  //   }
+  // }, [index?.chapter, characters])
+
+  // function handleBookSelectChange(value: BibleIndex) {
+  //   console.log("handleBookSelectChange", value)
+  //   router.push(`/bible/${value.book}/${value.chapter}`)
+  // }
 
   // useEffect(() => {
   //   if (!selectedBook) return
@@ -85,40 +108,41 @@ export default function BookSelect(
   //   })();
   // }, [selectedBook])
 
-  function changeBible(book:string ,chapter: number) {
+  function changeBible(book: string, chapter: number) {
     setSelectedChapter(chapter)
     setHandleSelect(book, chapter)
   }
 
   function setHandleSelect(book: string, chapter: number) {
     if (book && chapter) {
-      handleSelectChange({
-        book: book,
-        chapter: chapter
-      })
+      router.push(`/bible/${book}/${chapter}`)
+      // handleBookSelectChange({
+      //   book: book,
+      //   chapter: chapter
+      // })
     }
   }
 
   async function selectBook(newSelectBok: string) {
     console.log("selectBook", newSelectBok)
     if (newSelectBok && newSelectBok !== selectedBook) {
-      const queryString = Object.entries({
-        book: newSelectBok,
-      })
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&');
-
-      /** @type {import("@/app/api/chapter/route.ts")} */
-      const response: Response = await fetch('/api/chapter?' + queryString,
-        {cache: "force-cache",});
-      const _characters = await response.json() as number[];
-      console.log(_characters)
-      console.log(characters)
-      setCharacters(_characters)
+      // const queryString = Object.entries({
+      //   book: newSelectBok,
+      // })
+      //   .map(([key, value]) => `${key}=${value}`)
+      //   .join('&');
+      //
+      // /** @type {import("@/app/api/chapter/route.ts")} */
+      // const response: Response = await fetch('/api/chapter?' + queryString,
+      //   {cache: "force-cache",});
+      // const _characters = await response.json() as number[];
+      // console.log(_characters)
+      // console.log(characters)
+      // setCharacters(_characters)
       // if (characters.length > 0) { // 说明不是第一次进入初始化的时候
       // setSelectedChapter(_characters[0])
       // setHandleSelect(selectedBook, characters[0])
-      changeBible(newSelectBok,_characters[0])
+      // changeBible(newSelectBok, _characters[0])
       // }
       // setBibleIndex(`${selectedBook} ${selectedChapter}`)
       // })();
@@ -169,11 +193,12 @@ export default function BookSelect(
           let chapter = parseInt(e.target.value)
           // setSelectedChapter(chapter)
           // setHandleSelect(selectedBook, chapter)
-          changeBible(selectedBook,chapter)
+          changeBible(selectedBook, chapter)
         }}>
-          {characters?.map((character) => (
-            <option key={character} value={character}>
-              {character}
+          {bookChapters[selectedBook]?.map((chapter) => (
+            <option key={chapter} value={chapter}>
+              {/*<Link href={`/bible/${selectedBook}/${chapter}`}>{chapter}</Link>*/}
+              {chapter}
             </option>
           ))}
         </select>

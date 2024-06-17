@@ -1,12 +1,18 @@
-import {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {WordElement} from "./word";
 import {Bible} from "./data";
+import {useMyStore} from "@/app/bible/myStore";
+// import {useToolbar} from "@/app/bible/[book]/[chapter]/page";
 
-export default function BibleTable({book, chapter, playAudio}: {
+function BibleTable({book, chapter,
+                      // setText,
+// playAudio
+ }: {
   book: string, chapter: string,
-  playAudio: (text: string) => void
+  // setText: (text: string) => void,
+  // playAudio: (text: string) => void
 }) {
-
+  console.log("BibleTable", book, chapter)
   const [words, setWords] = useState<Bible[]>([])
   useEffect(() => {
     (async function () {
@@ -16,7 +22,7 @@ export default function BibleTable({book, chapter, playAudio}: {
       const response = await fetch(`/api/bible/${book}/${chapter}`,
         {
           // cache: "no-store",
-          cache: "force-cache",
+          // cache: "force-cache",
           // next: {
           //   revalidate: 10,
           // },
@@ -26,7 +32,16 @@ export default function BibleTable({book, chapter, playAudio}: {
       setWords(result)
     })()
   }, []);
-
+  // const {setText2} = useMyStore();
+  const onClickAudio = (reading) => {
+    // let {playAudio} = useToolbar()
+    // playAudio(reading)
+    // setText(reading)
+    // setText2(reading)
+    useMyStore.setState({text2: reading,
+      clickSignal: -useMyStore.getState().clickSignal
+    })
+  }
   return (
     <div className={"bible-body"} key={null}>
       <table className={"bible-table"} key={null}>
@@ -34,7 +49,13 @@ export default function BibleTable({book, chapter, playAudio}: {
         {words.map((word, index) => {
           // let hiragana = getHiragana(word)
           let reading = word.reading ?? ""
-          const onClickAudio = () => playAudio(reading)
+          // const onClickAudio = () => {
+          //   // let {playAudio} = useToolbar()
+          //   // playAudio(reading)
+          //   // setText(reading)
+          //   setText2(reading)
+          // }
+
           // console.log(`${book}-${chapter}-${index}`)
           return (
             <tr key={Math.random().toString()}>
@@ -49,7 +70,7 @@ export default function BibleTable({book, chapter, playAudio}: {
                   style={{
                     userSelect: "none"
                   }}
-                  onClick={onClickAudio}>言
+                  onClick={()=>onClickAudio(reading)}>言
                 </button>
                 <span style={{
                   // display: "block",
@@ -77,3 +98,5 @@ export default function BibleTable({book, chapter, playAudio}: {
     </div>
   );
 }
+// export default React.memo(BibleTable);
+export default BibleTable;

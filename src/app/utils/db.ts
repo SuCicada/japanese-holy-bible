@@ -1,9 +1,9 @@
+// https://qufei1993.github.io/nextjs-learn-cn/chapter17
+
 import {Prisma, PrismaClient} from "@prisma/client";
 import {QueryResult, QueryResultRow} from "pg";
 import {Pool} from 'pg';
-// import {Prisma} from "prisma-client-09a8d34f990ac5ec4d39c8b148141ddf39f6b0329786103087f17284234040ed/index";
 export const prisma = new PrismaClient();
-
 
 const pool = new Pool({
   connectionString: process.env.POSTGRES_URL,
