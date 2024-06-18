@@ -1,10 +1,13 @@
-export default function DashboardLayout({
-                                          children, // will be a page or nested layout
-                                          // params,
-                                        }: {
-  children: React.ReactNode,
-  //  params: any,
-}) {
+import React from "react";
+
+export default function DashboardLayout(
+  {
+    children, // will be a page or nested layout
+    // params,
+  }: {
+    children: React.ReactNode,
+    //  params: any,
+  }) {
   // const router = useRouter()
   // const pathname = usePathname();
   // const [index, setIndex] = useState<BibleIndex>()

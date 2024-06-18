@@ -157,16 +157,21 @@ export default function BookSelect(
     return <>
       {name}：
       <select value={value} onChange={async (e) => {
+        let newSelectBook = e.target.value
         if (isOld) {
-          setOldOption(e.target.value)
+          setOldOption(newSelectBook)
           setNewOption("")
         } else {
-          setNewOption(e.target.value)
+          setNewOption(newSelectBook)
           setOldOption("")
         }
-        console.log("BookOption", e.target.value)
+        console.log("BookOption", newSelectBook)
         // setSelectedBook(e.target.value)
-        await selectBook(e.target.value)
+        let chapter  = bookChapters[newSelectBook]?.[0] ?? 0
+        if (chapter) {
+          changeBible(newSelectBook, chapter)
+        }
+        // await selectBook(e.target.value)
         // handleSelectChangeEvent(e)
       }}>
         <option value="">---</option>
