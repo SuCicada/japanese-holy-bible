@@ -33,7 +33,7 @@ function BibleTable({book, chapter,
     })()
   }, []);
   // const {setText2} = useMyStore();
-  const onClickAudio = (reading) => {
+  const onClickAudio = (reading:string) => {
     // let {playAudio} = useToolbar()
     // playAudio(reading)
     // setText(reading)
