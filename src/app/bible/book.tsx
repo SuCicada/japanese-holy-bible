@@ -39,7 +39,7 @@ export default function BookSelect(
         const response = await fetch('/api/book',
           {
             // cache: "no-store",
-            cache: "force-cache",
+            // cache: "force-cache",
             // next: {
             //   revalidate: 10,
             // },
