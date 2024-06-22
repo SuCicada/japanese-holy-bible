@@ -1,5 +1,4 @@
 // import { sql } from '@vercel/postgres';
-import {sql} from "@/app/utils/db";
 
 import path from "path";
 
@@ -13,8 +12,10 @@ import {Prisma, PrismaClient} from "@prisma/client";
 
 let env_file = path.join(__dirname, '../.env.production.local');
 dotenv.config({path: env_file});
+console.log(process.env.POSTGRES_URL);
 let start = new Date().getTime();
 const prisma = new PrismaClient();
+import {sql} from "@/app/utils/db";
 
 async function import_furigana() {
   const {rows} = await sql`SELECT *
@@ -26,6 +27,7 @@ async function import_furigana() {
     }
     // row = row as Bible
     // row as Bible
+     console.log("start to get furigana for ", row.text)
     const data = await getJapaneseFurigana(row.text)
     let res = ""
     for (let item of data["data"]) {
@@ -41,7 +43,7 @@ async function import_furigana() {
     console.log(res);
     await sql`UPDATE bible
               SET furigana = ${res}
-                ,reading = ${row.text}
+                , reading  = ${row.text}
               WHERE id = ${row.id}`;
   }
   // console.log(rows);
@@ -84,23 +86,26 @@ async function split_multi(book: string, chapter: number, multi_words: string) {
   //     }
   //   }
   // }
-
-  if (bibles.length > 0) {
+  for (let bible of bibles) {
+    console.log(bible)
     try {
-      let res = await prisma.bible.createMany({
-        data: bibles
-      });
+      let res = await prisma.bible.create({data: bible})
       console.log(res)
     } catch (e) {
       console.error(e);
     }
   }
+  // if (bibles.length > 0) {
+  // }
 }
 
 (async () => {
-  let book = "コリントの信徒への手紙二 12";
+  let book = `
+  エフェソの信徒への手紙 6
+  `.trim()
   let multi_words = ` 
- 7また、あの啓示された事があまりにもすばらしいからです。それで、そのために思い上がることのないようにと、わたしの身に一つのとげが与えられました。それは、思い上がらないように、わたしを痛めつけるために、サタンから送られた使いです。 8この使いについて、離れ去らせてくださるように、わたしは三度主に願いました。 9すると主は、「わたしの恵みはあなたに十分である。力は弱さの中でこそ十分に発揮されるのだ」と言われました。だから、キリストの力がわたしの内に宿るように、むしろ大いに喜んで自分の弱さを誇りましょう。 10それゆえ、わたしは弱さ、侮辱、窮乏、迫害、そして行き詰まりの状態にあっても、キリストのために満足しています。なぜなら、わたしは弱いときにこそ強いからです。    `
+   10最後に言う。主に依り頼み、その偉大な力によって強くなりなさい。 11悪魔の策略に対抗して立つことができるように、神の武具を身に着けなさい。 12わたしたちの戦いは、血肉を相手にするものではなく、支配と権威、暗闇の世界の支配者、天にいる悪の諸霊を相手にするものなのです。 13だから、邪悪な日によく抵抗し、すべてを成し遂げて、しっかりと立つことができるように、神の武具を身に着けなさい。 14立って、真理を帯として腰に締め、正義を胸当てとして着け、 15平和の福音を告げる準備を履物としなさい。 16なおその上に、信仰を盾として取りなさい。それによって、悪い者の放つ火の矢をことごとく消すことができるのです。 17また、救いを兜としてかぶり、霊の剣、すなわち神の言葉を取りなさい。 18どのような時にも、“霊”に助けられて祈り、願い求め、すべての聖なる者たちのために、絶えず目を覚まして根気よく祈り続けなさい。 
+ `
   let chapter = parseInt(book.split(' ')[1])
   book = book.split(' ')[0]
   await split_multi(book, chapter, multi_words);
