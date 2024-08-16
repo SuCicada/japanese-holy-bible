@@ -1,8 +1,6 @@
 // no-config
-import { sql } from '@vercel/postgres';
-
-import { createPool } from '@vercel/postgres';
 import {NextResponse} from "next/server";
+import {sql} from "@/app/utils/db";
 export const dynamic = 'force-dynamic'
 // async function getServerSideProps() {
   // const result = await db.query.documents.findFirst();

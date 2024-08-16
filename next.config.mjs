@@ -3,6 +3,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     // env: process.env
+    output: "standalone",
     webpack: (config, { dev }) => {
         if (dev) {
             config.watchOptions = {

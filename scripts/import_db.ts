@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 
 import {Bible} from "@/app/bible/data";
 import {getJapaneseFurigana} from "@/app/utils/service";
-import {Client} from "pg";
 
 import {Prisma, PrismaClient} from "@prisma/client";
 
@@ -101,10 +100,10 @@ async function split_multi(book: string, chapter: number, multi_words: string) {
 
 (async () => {
   let book = `
-  エフェソの信徒への手紙 6
+  マルコによる福音書 14
   `.trim()
   let multi_words = ` 
-   10最後に言う。主に依り頼み、その偉大な力によって強くなりなさい。 11悪魔の策略に対抗して立つことができるように、神の武具を身に着けなさい。 12わたしたちの戦いは、血肉を相手にするものではなく、支配と権威、暗闇の世界の支配者、天にいる悪の諸霊を相手にするものなのです。 13だから、邪悪な日によく抵抗し、すべてを成し遂げて、しっかりと立つことができるように、神の武具を身に着けなさい。 14立って、真理を帯として腰に締め、正義を胸当てとして着け、 15平和の福音を告げる準備を履物としなさい。 16なおその上に、信仰を盾として取りなさい。それによって、悪い者の放つ火の矢をことごとく消すことができるのです。 17また、救いを兜としてかぶり、霊の剣、すなわち神の言葉を取りなさい。 18どのような時にも、“霊”に助けられて祈り、願い求め、すべての聖なる者たちのために、絶えず目を覚まして根気よく祈り続けなさい。 
+   38誘惑に陥らぬよう、目を覚まして祈っていなさい。心は燃えても、肉体は弱い。」 
  `
   let chapter = parseInt(book.split(' ')[1])
   book = book.split(' ')[0]

@@ -13,3 +13,8 @@ ADD CONSTRAINT unique_combination UNIQUE (book, chapter, verse);
 
 next build 
 next start -p 3001
+
+
+.env.production.local 用于build
+.env用于run
+其实内容都一样

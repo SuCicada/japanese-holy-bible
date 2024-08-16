@@ -39,5 +39,5 @@ next-env.d.ts
 *.iml
 package-lock.json
 /log.txt
-.env
+.env*
 /.vscode/
